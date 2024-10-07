@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações do Pokémon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #282c34;
+            color: #fff;
+        }
+
+        h1 {
+            color: #e50914;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #pokemon-info {
+            background-color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2,
+        h3 {
+            color: #e50914;
+        }
+
+        img {
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .habilidade-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 2px;
+            background-color: #e50914;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .habilidades-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Informações do Pokémon</h1>
+    <label for="pokemonInput">Digite o Nome ou ID do Pokémon:</label>
+    <input type="text" id="pokemonInput" placeholder="ex.: pikachu">
+    <button onclick="obterInfoPokemon()">Obter Informações do Pokémon</button>
+    <div id="pokemon-info"></div>
+
+    <script>
+        // Função para obter e exibir as informações do Pokémon
+        function obterInfoPokemon() {
+            // TODO: Os alunos devem completar esta função para buscar e exibir as informações do Pokémon
+            const inputPokemon = document.getElementById('pokemonInput').value.toLowerCase();
+            if (!inputPokemon) {
+                alert('Por favor, insira o nome ou ID do Pokémon.');
+                return;
+            }
+
+            // Instruções básicas para os alunos
+            // 1. Use fetch para buscar dados da API do Pokémon
+            // 2. Converta a resposta para JSON
+            // 3. Atualize a div com id "pokemon-info" com os dados do Pokémon
+            // 4. Lide com erros adequadamente (use .catch ou try-catch)
+
+            // Exemplo de como iniciar a requisição fetch:
+            fetch(`https://pokeapi.co/api/v2/pokemon/${inputPokemon}`)
+
+                .then(resposta => {
+                    return resposta.json()
+                })
+
+                .then(pokemon => {
+                             // Verifique se a resposta está OK
+                             // Converta a resposta para JSON
+                             // Atualize o conteúdo da div "pokemon-info" com os dados do Pokémon
+
+                             const divInfoPokemon = document.getElementById('pokemon-info')
+                             divInfoPokemon.innerHTML = `
+                                <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+                                <h2>Nome: ${pokemon.name}</h2>
+                                <h3>N° ${pokemon.id}</h3>
+                                <h3>Peso: ${pokemon.weight / 10}KG</h3>
+                                <h3>Altura: ${pokemon.height / 10}M</h3>
+                                                        `
+                })
+                .catch(error => {
+                    console.error('Erro ao obter informações do Pokémon:', error);
+                    alert('Não foi possível obter informações do Pokémon. Certifique-se de inserir um nome ou ID válido.');
+                });
+        }
+    </script>
+</body>
+
+</html>
